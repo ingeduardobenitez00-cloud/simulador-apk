@@ -1,0 +1,17 @@
+{
+  "name": "simulador-tsje",
+  "version": "1.0.0",
+  "description": "Simulador TSJE Wrapper",
+  "scripts": {
+    "sync": "cap sync",
+    "clone": "node scraper.js"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "puppeteer": "^22.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "appId": "com.arki.simulador",
+  "appName": "Simulador TSJE",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
