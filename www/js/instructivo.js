@@ -105,7 +105,17 @@ function empezar_demo() {
 function mostrar_siguiente_paso(event) {
     event.stopPropagation();
     const next = event.target.parentElement.nextElementSibling;
-    if (next.getAttribute("id") != "undefined") {
+    if (next && next.getAttribute("id") != "undefined") {
+        if (next.getAttribute("id") === "ubicaciones") {
+            const ubicacion = "261.0.0";
+            window.localStorage.setItem('ub_eleccion',     "ASOCIACION NACIONAL REPUBLICANA");
+            window.localStorage.setItem('ub_departamento', "CAPITAL");
+            window.localStorage.setItem('ub_distrito',     "ASUNCION");
+            window.localStorage.setItem('ub_localidad',    "");
+            window.localStorage.setItem("ubicacion", ubicacion);
+            window.location = "sufragio.html?ubicacion=" + ubicacion;
+            return;
+        }
         cambiar_url(next.getAttribute("id"));
     }
 }
