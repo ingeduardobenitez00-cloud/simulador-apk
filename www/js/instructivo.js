@@ -16,49 +16,13 @@ function bindUbicacionClick(items, handler) {
 }
 
 function inicializacion() {
-    // Limpiar claves de ubicacion de sesiones anteriores.
-    // "Borrar cookies" en el browser/app NO limpia localStorage;
-    // limpiamos explicitamente para evitar que valores viejos contaminen el header.
-    ['ub_eleccion','ub_departamento','ub_distrito','ub_localidad'].forEach(
-        function(k){ window.localStorage.removeItem(k); }
-    );
-
-    window.addEventListener("load", actualizar_estado);
-
-    window.addEventListener("hashchange", actualizar_estado);
-
-    function actualizar_estado() {
-        //se ocultan todos los elementos "paso"
-        resetear_divs();
-        let element_id =
-            window.location.hash.split("#").filter(Boolean)[0] || null;
-        if (!element_id) {
-            inicio_demo();
-        } else {
-            const selected = document.getElementById(element_id);
-            if (element_id === 'ubicaciones' && !selected ) volver_demo()
-            selected.style.display = "";
-        }
-    }
-
-    const element = document.querySelectorAll(".paso button.next");
-    Array.from(element).forEach(function (item) {
-        item.addEventListener("click", mostrar_siguiente_paso);
-    });
-
-    const buttonPrev = document.querySelectorAll("button.prev");
-    Array.from(buttonPrev).forEach(function (item) {
-        item.addEventListener("click", volver_demo);
-    });
-
-    bindUbicacionClick(document.querySelectorAll("[data-tipo=eleccion]"),     mostrar_departamentos);
-    bindUbicacionClick(document.querySelectorAll("[data-tipo=departamento]"), mostrar_distritos);
-    bindUbicacionClick(document.querySelectorAll("[data-tipo=distrito]"),     mostrar_mesas);
-    bindUbicacionClick(document.querySelectorAll("[data-tipo=mesa]"),         mostrar_demo_ubicacion);
-
-    document.getElementById("paso-5").addEventListener("click", mostrar_final);
-
-    document.getElementById("reset").addEventListener("click", inicio_demo);
+    const ubicacion = "261.0.0";
+    window.localStorage.setItem('ub_eleccion',     "ASOCIACION NACIONAL REPUBLICANA");
+    window.localStorage.setItem('ub_departamento', "CAPITAL");
+    window.localStorage.setItem('ub_distrito',     "ASUNCION");
+    window.localStorage.setItem('ub_localidad',    "");
+    window.localStorage.setItem("ubicacion", ubicacion);
+    window.location.replace("sufragio.html?ubicacion=" + ubicacion);
 }
 
 if ("serviceWorker" in navigator) {
