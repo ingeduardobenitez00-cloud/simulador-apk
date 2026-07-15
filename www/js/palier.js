@@ -47,17 +47,17 @@ function getTransform() {
 	let scaleX = window.innerWidth / 1920;
 	let scaleY = window.innerHeight / 1080;
 
-	let scale = Math.min(scaleX, scaleY);
-
-    return  scale
+    return { x: scaleX, y: scaleY };
 }
 
 function applyTransform(scale) {
-    document.body.style.WebkitTransform = `scale(${scale})`;
-    document.body.style.MozTransform = `scale(${scale})`;
-    document.body.style.msTransform = `scale(${scale})`;
-    document.body.style.OTransform = `scale(${scale})`;
-    document.body.style.transform = `scale(${scale})`;
+    let transformStr = typeof scale === 'object' ? `scale(${scale.x}, ${scale.y})` : `scale(${scale})`;
+    document.body.style.transformOrigin = "top left";
+    document.body.style.WebkitTransform = transformStr;
+    document.body.style.MozTransform = transformStr;
+    document.body.style.msTransform = transformStr;
+    document.body.style.OTransform = transformStr;
+    document.body.style.transform = transformStr;
     document.documentElement.style.fontSize = `${16}px`;
 } 
 
