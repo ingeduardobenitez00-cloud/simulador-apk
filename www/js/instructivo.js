@@ -16,7 +16,7 @@ function bindUbicacionClick(items, handler) {
 }
 
 function inicializacion() {
-    const ubicacion = "261.0.0";
+    const ubicacion = "59.0.0";
     window.localStorage.setItem('ub_eleccion',     "ASOCIACION NACIONAL REPUBLICANA");
     window.localStorage.setItem('ub_departamento', "CAPITAL");
     window.localStorage.setItem('ub_distrito',     "ASUNCION");
@@ -71,7 +71,7 @@ function mostrar_siguiente_paso(event) {
     const next = event.target.parentElement.nextElementSibling;
     if (next && next.getAttribute("id") != "undefined") {
         if (next.getAttribute("id") === "ubicaciones") {
-            const ubicacion = "261.0.0";
+            const ubicacion = "59.0.0";
             window.localStorage.setItem('ub_eleccion',     "ASOCIACION NACIONAL REPUBLICANA");
             window.localStorage.setItem('ub_departamento', "CAPITAL");
             window.localStorage.setItem('ub_distrito',     "ASUNCION");

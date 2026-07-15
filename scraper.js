@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 
-const TARGET_URL = 'https://simuladoroficial.tsje.gov.py/app.html?ubicacion=261.0.0';
+const TARGET_URL = 'https://simuladoroficial.tsje.gov.py/sufragio.html?ubicacion=59.0.0';
 const BASE_HOST = 'simuladoroficial.tsje.gov.py';
 const OUT_DIR = path.join(__dirname, 'www');
 
@@ -38,7 +38,7 @@ const createIndexHtml = () => {
     <style>body,html,iframe{width:100%;height:100%;margin:0;padding:0;border:none;overflow:hidden;background:#000;}</style>
 </head>
 <body>
-    <iframe src="app.html?ubicacion=261.0.0"></iframe>
+    <iframe src="sufragio.html?ubicacion=59.0.0"></iframe>
 </body>
 </html>`;
   fs.writeFileSync(path.join(OUT_DIR, 'index.html'), htmlContent);

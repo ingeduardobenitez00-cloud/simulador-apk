@@ -126,6 +126,9 @@ function set_constants(data) {
                         }
                         place_text(data.i18n);
                         place_text(data.encabezado);
+
+                        document.querySelector("#_txt_introduzca_boleta").innerHTML += "<span class=\"mesa_nro\"> MESA " + constants.nro_mesa + "</span>"
+
                         resolve();
                     }
                 );

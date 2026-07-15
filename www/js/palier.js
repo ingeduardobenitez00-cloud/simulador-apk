@@ -306,13 +306,7 @@ function _palier_load_data(){
                 categorias: sort_by_posicion(categorias),
                 candidaturas,
                 agrupaciones,
-                boletas,
-                encabezado: {
-                    pais:         window.localStorage.getItem('ub_eleccion')     || '',
-                    distrito:     window.localStorage.getItem('ub_departamento') || '',
-                    departamento: window.localStorage.getItem('ub_distrito')     || '',
-                    localidad:    window.localStorage.getItem('ub_localidad')    || '',
-                }
+                boletas
             };            
             cargar_datos(controller_data);
             resolve();
@@ -444,31 +438,27 @@ function _palier_cargar_ubicacion(nueva_ubic){
 
 function _palier_header_ubicacion(cod_ubicacion){
     /*
-     * Modifica el header de la ubicacion especialmente para el simulador.
-     * Lee cada nivel de ubicacion guardado por el instructivo en localStorage
-     * para poblar los spans individuales del header de sufragio.
+     * Modifica el header de la ubicacion especialmente para el simulador
      */
     document.body.setAttribute('data-ubicacion', cod_ubicacion);
-
-    // Cada nivel fue guardado por instructivo.js al hacer click en el boton correspondiente.
-    // NOTA: no usar `titulo` como fallback; ese tenia el formato concatenado viejo.
-    const ub_eleccion     = window.localStorage.getItem('ub_eleccion')     || '';
-    const ub_departamento = window.localStorage.getItem('ub_departamento') || '';
-    const ub_distrito     = window.localStorage.getItem('ub_distrito')     || '';
-    const ub_localidad    = window.localStorage.getItem('ub_localidad')    || '';
-
-    const setSpan = (id, val) => {
-        const el = document.querySelector('#' + id);
-        if (el && val) el.textContent = val;
-    };
-
-    setSpan('_txt_pais',         ub_eleccion);
-    setSpan('_txt_distrito',     ub_departamento);
-    setSpan('_txt_departamento', ub_distrito);
-    setSpan('_txt_localidad',    ub_localidad);
-
-    const fechaEl = document.querySelector('#_txt_fecha');
-    if (fechaEl) fechaEl.textContent = 'Elección de demostración - Uso no oficial';
+    fetch("/ubicaciones.json").then(
+    	response => response.json()
+    ).then( data => {
+        data.forEach((ubicacion) => {
+            if (titulo) {
+                document.querySelector("#_txt_titulo").textContent = titulo;
+            }
+            else {
+                if(ubicacion[2] !== cod_ubicacion) return;
+                if(ubicacion[0] != ""){
+                    document.querySelector("#_txt_titulo").textContent = `${ubicacion[0]} - ${ubicacion[1]}`;
+                } else {
+                    document.querySelector("#_txt_titulo").textContent = ubicacion[1];
+                }
+            }
+            document.querySelector("#_txt_fecha").textContent = "Elección de demostración - Uso no oficial";
+        });
+    });
 }
 
 function action_inicio(callback){

@@ -304,6 +304,9 @@ body[data-state='alto-contraste'] .candidato {
 body[data-state='alto-contraste'] .candidato img {
   display: none;
 }
+body[data-state='alto-contraste'] .mesa_nro {
+  color: #fff !important;
+}
 body[data-state='alto-contraste'] #pantalla_consulta #candidatos_seleccion .candidato .foto-candidato-principal {
   display: none;
 }

@@ -414,6 +414,9 @@ b {
   min-width: 250px;
   width: auto;
 }
+.mesa_nro {
+  color: #B462C9;
+}
 #contenedor_opciones {
   display: block;
   position: absolute;
@@ -1970,7 +1973,7 @@ body:after {
   color: #ffffff;
   font-size: 30px;
   font-weight: bold;
-  display: none !important    ;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
@@ -3749,3 +3752,5 @@ body[data-state='alto-contraste'] #asistida_container #indicador_asistida {
     top: 95px;
   }
 }
+
+#encabezado #datos_ubicacion .label:nth-child(n+5) { margin-left: 4rem !important; }

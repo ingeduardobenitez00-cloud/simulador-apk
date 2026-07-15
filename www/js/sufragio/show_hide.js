@@ -34,7 +34,7 @@ function _inicializar_etiqueta_mesa(){
     var elem = document.getElementById('etiqueta_mesa');
     if (!elem) return;
     var nro = (constants && constants.nro_mesa) ? constants.nro_mesa : '';
-    elem.textContent = nro ? 'MESA ' + nro : '';
+    elem.style.display = 'none';
 }
 
 function _mostrar_etiqueta_mesa(){

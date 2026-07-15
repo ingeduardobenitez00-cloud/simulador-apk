@@ -107,13 +107,16 @@ function cargar_datos(data) {
      * que manda son "categorias", "candidaturas", "agrupaciones", "boletas".
      */
 
-    localController.cargar_datos(data);;
+    localController.cargar_datos(data);
+    _inicializar_etiqueta_mesa();
 }
 
 /**
  * Funcion llamada desde el back carga la pantalla inicial cuando un elector mete una boleta.
  */
 function cargar_pantalla_inicial() {
+    _mostrar_etiqueta_mesa();
+    _inicializar_etiqueta_mesa();
     localController.cargar_pantalla_inicial();
 }
 
