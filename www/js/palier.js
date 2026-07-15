@@ -46,12 +46,19 @@ function preventBehavior(e){
 function getTransform() {
 	let scaleX = window.innerWidth / 1920;
 	let scaleY = window.innerHeight / 1080;
-
-    return { x: scaleX, y: scaleY };
+	let scale = Math.min(scaleX, scaleY);
+    return { scale: scale, scaleX: scaleX, scaleY: scaleY };
 }
 
-function applyTransform(scale) {
-    let transformStr = typeof scale === 'object' ? `scale(${scale.x}, ${scale.y})` : `scale(${scale})`;
+function applyTransform(transformData) {
+    let scale = transformData.scale;
+    // Calculate how much empty space is left and divide by 2 to center it
+    let offsetX = (window.innerWidth - 1920 * scale) / 2;
+    let offsetY = (window.innerHeight - 1080 * scale) / 2;
+    
+    // Applying scale AND translation to center it without distorting
+    let transformStr = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+    
     document.body.style.transformOrigin = "top left";
     document.body.style.WebkitTransform = transformStr;
     document.body.style.MozTransform = transformStr;
