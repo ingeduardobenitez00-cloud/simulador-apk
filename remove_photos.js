@@ -1,47 +1,55 @@
 const fs = require('fs');
+const { execSync } = require('child_process');
 const path = require('path');
 
 const filePath = path.join(__dirname, 'www', 'datos', '59.0.0', 'Candidaturas.json');
 
 try {
+    console.log("Restaurando Candidaturas.json original desde el commit 6d0fb1a...");
+    // 6d0fb1a es el commit de "Ajustes de centrado...", justo antes de los borrados.
+    execSync('git checkout 6d0fb1a -- www/datos/59.0.0/Candidaturas.json');
+} catch (error) {
+    console.log("Error haciendo checkout. Asegurate de no tener cambios locales sin commitear.");
+}
+
+try {
   let data = fs.readFileSync(filePath, 'utf8');
   let candidaturas = JSON.parse(data);
 
-  let modificados = 0;
+  let nuevasCandidaturas = [];
 
   candidaturas.forEach(c => {
-    // Para Intendentes (INT): borrar todos excepto lista 1 (Camilo Perez)
+    // Para Intendentes (INT)
     if (c.cod_categoria === 'INT') {
-      if (c.cod_lista !== '1') {
-        if (c.imagenes.includes('default_mujer')) {
-            c.imagenes = ['default_mujer'];
-        } else {
-            c.imagenes = ['default'];
+        if (String(c.cod_lista) !== '1') { 
+            c.imagenes = c.imagenes && c.imagenes.includes('default_mujer') ? ['default_mujer'] : ['default'];
+            c.nombre = '';
+            c.asistida = '';
         }
-        c.nombre = '';
-        c.asistida = '';
-        modificados++;
-      }
+        nuevasCandidaturas.push(c);
     }
-    // Para Concejales (JUN): borrar todos excepto lista 1, opcion 5 (EL ARKI)
+    // Para Concejales (JUN)
     else if (c.cod_categoria === 'JUN') {
-      // Condición: NO es (lista 1 Y opcion 5)
-      if (!(c.cod_lista === '1' && c.nro_orden === 5)) {
-        if (c.imagenes.includes('default_mujer')) {
-            c.imagenes = ['default_mujer'];
+        if (String(c.cod_lista) === '1') {
+            // En la Lista 1, SOLO dejamos a El Arki (opcion 5) y ELIMINAMOS los demas 
+            // Esto forzara al simulador a mostrarlo gigante ocupando todo el espacio.
+            if (String(c.nro_orden) === '5') {
+                nuevasCandidaturas.push(c);
+            }
         } else {
-            c.imagenes = ['default'];
+            // Para otras listas, borramos nombres y fotos pero dejamos los cuadros
+            c.imagenes = c.imagenes && c.imagenes.includes('default_mujer') ? ['default_mujer'] : ['default'];
+            c.nombre = '';
+            c.asistida = '';
+            nuevasCandidaturas.push(c);
         }
-        c.nombre = '';
-        c.asistida = '';
-        modificados++;
-      }
+    } else {
+        nuevasCandidaturas.push(c);
     }
   });
 
-  fs.writeFileSync(filePath, JSON.stringify(candidaturas, null, 2), 'utf8');
-  console.log(`✅ ¡Proceso completado exitosamente! Se modificaron ${modificados} candidatos (se borraron fotos y nombres).`);
-  console.log(`📸 Ahora debes hacer un commit y push para que se genere el nuevo APK.`);
+  fs.writeFileSync(filePath, JSON.stringify(nuevasCandidaturas, null, 2), 'utf8');
+  console.log(`✅ ¡Proceso completado! Se ha recuperado la foto de El Arki y ahora aparecera GRANDE en la pantalla.`);
 } catch (error) {
   console.error('Error al procesar el archivo JSON:', error);
 }
