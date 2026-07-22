@@ -34,8 +34,6 @@ function detect_browser(){
 }
 
 function resize(){
-    document.body.style.width = 0;
-    document.body.style.height = 0;
     applyTransform(getTransform());              
 }
 
@@ -52,11 +50,18 @@ function getTransform() {
 
 function applyTransform(transformData) {
     let scale = transformData.scale;
-    // Calculate how much empty space is left and divide by 2 to center it
+    // We let CSS handle the centering via flexbox or absolute positioning, or just scale the body and center it.
+    // Actually, setting width/height to 1920/1080 on body makes margin:auto work inside it, 
+    // or we can translate it manually.
+    
+    document.body.style.width = "1920px";
+    document.body.style.height = "1080px";
+    document.body.style.margin = "0";
+    document.body.style.overflow = "hidden";
+    
     let offsetX = (window.innerWidth - 1920 * scale) / 2;
     let offsetY = (window.innerHeight - 1080 * scale) / 2;
     
-    // Applying scale AND translation to center it without distorting
     let transformStr = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
     
     document.body.style.transformOrigin = "top left";
