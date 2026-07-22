@@ -195,6 +195,11 @@ b {
   #loading {
     height: 900px;
   }
+  .opciones.conbarra,
+  .opciones.sinbarra {
+    width: 100% !important;
+    height: 800px !important;
+  }
 }
 #contenedor {
   margin: auto;

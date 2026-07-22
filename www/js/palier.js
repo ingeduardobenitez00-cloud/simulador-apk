@@ -58,6 +58,10 @@ function applyTransform(transformData) {
     document.body.style.height = "1080px";
     document.body.style.margin = "0";
     document.body.style.overflow = "hidden";
+    // Disable double-tap to zoom and scrolling, which causes the "multiple taps to click" issue on mobile webviews.
+    document.body.style.touchAction = "none";
+    document.body.style.userSelect = "none";
+    document.body.style.webkitUserSelect = "none";
     
     let offsetX = (window.innerWidth - 1920 * scale) / 2;
     let offsetY = (window.innerHeight - 1080 * scale) / 2;
